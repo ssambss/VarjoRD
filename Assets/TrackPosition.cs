@@ -6,21 +6,45 @@ using System.IO;
 public class TrackPosition : MonoBehaviour
 {
     private Vector3 previousPosition;
+    public float trackingFrequency;
+    private float lastCheck = 0.0F;
+    public string figure;
+    private int logNumber;
+    public bool trackingActive = false;
 
     void Start()
     {
         previousPosition = transform.position;
-        InvokeRepeating(nameof(GetPosition), 0.1f, 0.25f);
+        figure = "Test";
+        logNumber = 0;
+        //InvokeRepeating(nameof(GetPosition), 0.1f, trackingFrequency);
     }
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            previousPosition = transform.position;
+            logNumber++;
+            trackingActive = true;
 
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            trackingActive = false;
+        }
+
+        if (trackingActive && (Time.time - lastCheck) >= trackingFrequency)
+        {
+            GetPosition();
+            lastCheck = Time.time;
+        }
     }
 
     void GetPosition()
     {
-        string path = Application.dataPath + "/Log.txt";
+        string path = Application.dataPath + "/" + figure + "_log" + logNumber + ".csv";
         if (!File.Exists(path))
         {
             File.WriteAllText(path, "");

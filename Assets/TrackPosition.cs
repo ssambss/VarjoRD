@@ -5,7 +5,6 @@ using System.IO;
 
 public class TrackPosition : MonoBehaviour
 {
-    private Vector3 previousPosition;
     public float trackingFrequency;
     private float lastCheck = 0.0F;
     public string figure;
@@ -14,17 +13,15 @@ public class TrackPosition : MonoBehaviour
 
     void Start()
     {
-        previousPosition = transform.position;
         figure = "Test";
         logNumber = 0;
-        //InvokeRepeating(nameof(GetPosition), 0.1f, trackingFrequency);
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            previousPosition = transform.position;
+
             logNumber++;
             trackingActive = true;
 
@@ -50,11 +47,11 @@ public class TrackPosition : MonoBehaviour
             File.WriteAllText(path, "");
         }
 
-        Vector3 deltaPosition = transform.position - previousPosition;
-        Debug.Log("X= " + deltaPosition.x + "Y= " + deltaPosition.y + "Z= " + deltaPosition.z);
-        string posData = deltaPosition.x.ToString() + "," + deltaPosition.y.ToString() + "," + deltaPosition.z.ToString() + "\n";
+
+        Debug.Log("X= " + transform.position.x + "Y= " + transform.position.y + "Z= " + transform.position.z);
+        string posData = transform.position.x.ToString() + "," + transform.position.y.ToString() + "," + transform.position.z.ToString() + "\n";
         File.AppendAllText(path, posData);
-        previousPosition = transform.position;
+
     }
 
 }

@@ -1312,6 +1312,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1697619587}
   - component: {fileID: 1697619586}
+  - component: {fileID: 1697619588}
   m_Layer: 0
   m_Name: DataCollector
   m_TagString: Untagged
@@ -1326,7 +1327,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1697619585}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4dba7724feb7e554f809672b2f4ee446, type: 3}
   m_Name: 
@@ -1348,6 +1349,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1697619588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697619585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2037e6b97d8c8264399190c760d50bc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HandModelBase: {fileID: 1967308645}
+  LeapServiceProvider: {fileID: 802639642}
+  trackingFrequency: 0.1
+  figure: 
+  trackingActive: 0
 --- !u!1 &1732691512
 GameObject:
   m_ObjectHideFlags: 0

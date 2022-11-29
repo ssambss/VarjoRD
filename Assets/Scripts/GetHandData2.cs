@@ -27,7 +27,7 @@ public class GetHandData2 : MonoBehaviour
     {
         Hand _hand = HandModelBase.GetLeapHand();
         OnUpdateHand(_hand);
-        fingerPos = _hand.GetMiddle().TipPosition;
+        fingerPos = _hand.GetIndex().TipPosition;
         //Debug.Log(fingerPos);
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -94,5 +94,17 @@ public class GetHandData2 : MonoBehaviour
         File.AppendAllText(path, posData);
     }
 
+    public void RecButton()
+    {
+        if (!trackingActive)
+        {
+            logNumber++;
+            trackingActive = true;
+        }
 
+        else
+        {
+            trackingActive = false;
+        }
+    }
 }

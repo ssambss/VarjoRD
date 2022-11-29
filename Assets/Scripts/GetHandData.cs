@@ -13,7 +13,7 @@ public class GetHandData : MonoBehaviour
     {
         Hand _hand = HandModelBase.GetLeapHand();
         OnUpdateHand(_hand);
-        Vector3 fingerPos = _hand.GetMiddle().TipPosition;
+        Vector3 fingerPos = _hand.GetIndex().TipPosition;
         //Debug.Log(fingerPos);
     }
 

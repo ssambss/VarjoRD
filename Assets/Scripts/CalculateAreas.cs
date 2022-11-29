@@ -25,7 +25,7 @@ public class CalculateAreas : MonoBehaviour
         }
 
         triangleA = 0.5f * ( triangleBase + triangleBase) * triangleHeight;
-        Debug.Log(triangleA);
+        //Debug.Log(triangleA);
     }
 
     public void CalculateSquareArea(Vector3[] points)
@@ -37,6 +37,6 @@ public class CalculateAreas : MonoBehaviour
         }
 
         squareA = Mathf.Pow(squareSide, 2);
-        Debug.Log(squareA);
+        //Debug.Log(squareA);
     }
 }

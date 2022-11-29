@@ -14,20 +14,24 @@ public class GetHandData2 : MonoBehaviour
     private float lastCheck = 0.0F;
     public string figure;
     private int logNumber;
-    public bool trackingActive = false;
-    private Vector3 fingerPos;
+    public static bool trackingActive = false;
+    public static Vector3 fingerPos;
 
     void Start()
     {
-        figure = "Test";
         logNumber = 0;
     }
 
+
     public void Update()
     {
+        figure = DrawFigures.currentFigure;
         Hand _hand = HandModelBase.GetLeapHand();
-        OnUpdateHand(_hand);
-        fingerPos = _hand.GetIndex().TipPosition;
+        if (_hand != null)
+        {
+            OnUpdateHand(_hand);
+            fingerPos = _hand.GetIndex().TipPosition;
+        }
         //Debug.Log(fingerPos);
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -43,11 +47,11 @@ public class GetHandData2 : MonoBehaviour
             trackingActive = false;
         }
 
-        if (trackingActive && (Time.time - lastCheck) >= trackingFrequency)
+        /*if (trackingActive && (Time.time - lastCheck) >= trackingFrequency)
         {
             GetPosition();
             lastCheck = Time.time;
-        }
+        }*/
     }
 
     void OnUpdateHand(Hand _hand)

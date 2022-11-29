@@ -37,8 +37,8 @@ namespace Leap.Unity.Examples
 
         private void OnDisable()
         {
-            // This ensures the scale is reset in preparation for the next OnEnable
-            transform.localScale = scaleFrom;
+            // This ensures the scale is reset in preparation for the next OnEnable 
+            //transform.localScale = scaleFrom;
         }
 
         private void Update()
@@ -59,6 +59,7 @@ namespace Leap.Unity.Examples
                     transform.localScale = scaleTo;
                 }
             }
+            
         }
     }
 }

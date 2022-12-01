@@ -13,10 +13,10 @@ public class HandDraw : MonoBehaviour
 
     public LineRenderer lr;
 
-
     private void Update()
     {
         
+        //if (GetHandData2.trackingActive) Draw();
 
         if (Input.GetKey(KeyCode.A) && GetHandData2.trackingActive)
         {
@@ -56,8 +56,7 @@ public class HandDraw : MonoBehaviour
             lr.positionCount = points.Count;
             lr.SetPosition(index, points[index]);
             index++;
-            Debug.Log(points.Count);
-            
+            Debug.Log(points.Count);          
         }
 
         if (Input.GetKeyDown(KeyCode.LeftControl))

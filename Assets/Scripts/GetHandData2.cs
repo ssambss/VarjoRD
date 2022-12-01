@@ -25,7 +25,7 @@ public class GetHandData2 : MonoBehaviour
 
     public void Update()
     {
-        figure = DrawFigures.currentFigure;
+        figure = DrawFigures.currentFigure.ToString();
         Hand _hand = HandModelBase.GetLeapHand();
         if (_hand != null)
         {
@@ -47,11 +47,11 @@ public class GetHandData2 : MonoBehaviour
             trackingActive = false;
         }
 
-        /*if (trackingActive && (Time.time - lastCheck) >= trackingFrequency)
+        if (trackingActive && (Time.time - lastCheck) >= trackingFrequency)
         {
             GetPosition();
             lastCheck = Time.time;
-        }*/
+        }
     }
 
     void OnUpdateHand(Hand _hand)

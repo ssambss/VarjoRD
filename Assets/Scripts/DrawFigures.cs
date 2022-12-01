@@ -1,45 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DrawFigures : MonoBehaviour
 {
-    public Vector3 positionToMoveTo;
-    private Vector3 originalPos;
+
+    [SerializeField] private GameObject activatorPrefab;
+    [SerializeField] private GameObject guidePrefab;
+    [SerializeField] private GameObject circleParent;
     [SerializeField] private GameObject[] triangleGuides;
     [SerializeField] private GameObject[] squareGuides;
+    [SerializeField] List<GameObject> circleGuides = new List<GameObject>();
     [SerializeField] private Transform[] triangle;
     [SerializeField] private Transform[] square;
     [SerializeField] private CalculateAreas calc;
-    public static string currentFigure;
+    [SerializeField] private HandDraw hd;
+    [SerializeField] private int steps;
+    [SerializeField] private float radius;
+    [SerializeField] private Vector3 offset;
+    public static Vector3[] trianglePointsInLine;
+    public static Vector3[] squarePointsInLine;
+    public static Vector3[] circlePointsInLine;
+    //public Vector3 positionToMoveTo;
+    //public Vector3 originalPos;
 
-    private int index = 0;
+    //private int index = 0;
 
+    //private float n = 5;
     public LineRenderer lr;
 
-    public void SetUpLine(Transform[] points)
-    {
-        lr.positionCount = points.Length;
-    }
+    public enum Figure { Triangle, Square, Circle }
+
+    public static Figure currentFigure;
 
     void Start()
     {
-        originalPos = transform.position;
-        positionToMoveTo = triangle[index].transform.position;
+        //originalPos = transform.position;
+        //positionToMoveTo = triangle[index].transform.position;
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            DrawTriangle();
-        }
+        if (Input.GetMouseButtonDown(0)) DrawTriangle();
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            DrawSquare();
-        }
+        if (Input.GetMouseButtonDown(1)) DrawSquare();
 
+        if (Input.GetMouseButtonDown(2)) DrawCircle(steps, radius);
+
+            
 
         /*if (Input.GetMouseButtonDown(0))
         {
@@ -49,10 +58,17 @@ public class DrawFigures : MonoBehaviour
 
     }
 
+    public void SetUpLine(Transform[] points)
+    {
+        lr.positionCount = points.Length;
+    }
+
+
     public void DrawTriangle()
     {
+        hd.ClearDrawing();
         DeactivateGuides();
-        currentFigure = "Triangle";
+        currentFigure = Figure.Triangle;
         ActivateGuides();
         SetUpLine(triangle);
         for (int i = 0; i < lr.positionCount; i++)
@@ -60,7 +76,6 @@ public class DrawFigures : MonoBehaviour
             lr.SetPosition(i, triangle[i].position);
         }
 
-        Vector3[] trianglePointsInLine;
         trianglePointsInLine = new Vector3[lr.positionCount];
 
         lr.GetPositions(trianglePointsInLine);
@@ -70,8 +85,9 @@ public class DrawFigures : MonoBehaviour
 
     public void DrawSquare()
     {
+        hd.ClearDrawing();
         DeactivateGuides();
-        currentFigure = "Square";
+        currentFigure = Figure.Square;
         ActivateGuides();
         SetUpLine(square);
         for (int i = 0; i < lr.positionCount; i++)
@@ -79,7 +95,6 @@ public class DrawFigures : MonoBehaviour
             lr.SetPosition(i, square[i].position);
         }
 
-        Vector3[] squarePointsInLine;
         squarePointsInLine = new Vector3[lr.positionCount];
 
         lr.GetPositions(squarePointsInLine);
@@ -87,16 +102,64 @@ public class DrawFigures : MonoBehaviour
         calc.CalculateSquareArea(squarePointsInLine);
     }
 
+    public void DrawCircle(int steps, float radius)
+    {
+        hd.ClearDrawing();
+        DeactivateGuides();
+        currentFigure = Figure.Circle;
+        if (circleGuides != null)ActivateGuides();
+        lr.positionCount = steps;
+
+        for (int i = 0; i < steps; i++)
+        {
+            float circumferenceProgress = (float)i / (steps - 1);
+
+            float currentRadian = circumferenceProgress * 2 * Mathf.PI;
+
+            
+            float xScaled = Mathf.Cos(currentRadian);
+            float yScaled = Mathf.Sin(currentRadian);
+            float x = xScaled * radius;
+            Debug.Log(x);
+            float y = yScaled * radius;
+            Vector3 currentPos = new Vector3(x, y, 0);
+
+            lr.SetPosition(i, currentPos + offset);
+
+            //if (i == 0)  InstantiateCircleActivator(currentPos);
+
+            //if (i % n == 0) InstantiateCircleGuides(currentPos);
+        }
+
+        circlePointsInLine = new Vector3[lr.positionCount];
+
+        lr.GetPositions(circlePointsInLine);
+    }
+
+    /*public void InstantiateCircleGuides(Vector3 spawnPos)
+    {
+        if (circleGuides.Count < steps / n) circleGuides.Add(Instantiate(guidePrefab, spawnPos + offset, Quaternion.identity));
+    }
+
+    public void InstantiateCircleActivator(Vector3 spawnPos)
+    {
+        if (circleGuides.Count < 1) circleGuides.Add(Instantiate(activatorPrefab, spawnPos + offset, Quaternion.identity));
+    }*/
+
     public void ActivateGuides()
     {
         switch (currentFigure)
         {
-            case "Triangle":
+            case Figure.Triangle:
                 foreach (GameObject guide in triangleGuides) guide.SetActive(true);
                 break;
 
-            case "Square":
+            case Figure.Square:
                 foreach (GameObject guide in squareGuides) guide.SetActive(true);
+                break;
+
+            case Figure.Circle:
+                foreach (GameObject guide in circleGuides) guide.SetActive(true);
                 break;
         }
     }
@@ -105,15 +168,20 @@ public class DrawFigures : MonoBehaviour
     {
         switch (currentFigure)
         {
-            case "Triangle":
+            case Figure.Triangle:
                 foreach (GameObject guide in triangleGuides) guide.SetActive(false);
                 break;
 
-            case "Square":
+            case Figure.Square:
                 foreach (GameObject guide in squareGuides) guide.SetActive(false);
+                break;
+
+            case Figure.Circle:
+                foreach (GameObject guide in circleGuides) guide.SetActive(false);
                 break;
         }
     }
+
     /*
     IEnumerator LerpPosition(int n, Vector3 targetPosition, float duration)
     {
@@ -138,6 +206,4 @@ public class DrawFigures : MonoBehaviour
         }
         StartCoroutine(LerpPosition(n - 1, positionToMoveTo, duration));
     }*/
-
-    
 }

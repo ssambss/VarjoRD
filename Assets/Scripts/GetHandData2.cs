@@ -13,6 +13,7 @@ public class GetHandData2 : MonoBehaviour
     public float trackingFrequency;
     private float lastCheck = 0.0F;
     public string figure;
+    public string folderName;
     private int logNumber;
     public static bool trackingActive = false;
     public static Vector3 fingerPos;
@@ -27,6 +28,7 @@ public class GetHandData2 : MonoBehaviour
     public void Update()
     {
         figure = DrawFigures.currentFigure.ToString();
+        folderName = DrawFigures.currentFigure.ToString() + "_Data";
         Hand _hand = HandModelBase.GetLeapHand();
         if (_hand != null)
         {
@@ -89,10 +91,10 @@ public class GetHandData2 : MonoBehaviour
 
     void GetPosition()
     {
-        string path = Application.dataPath + "/" + figure + "_log" + logNumber + ".csv";
+        string path = Application.dataPath + "/" + "Data" + "/" + folderName + "/" + figure + "_log" + logNumber + ".csv";
         if (!File.Exists(path))
         {
-            File.WriteAllText(path, "");
+            File.WriteAllText(path, "X" + "," + "Y" + "," + "Z" + "\n");
         }
      
         Debug.Log("X= " + fingerPos.x + "Y= " + fingerPos.y + "Z= " + fingerPos.z);

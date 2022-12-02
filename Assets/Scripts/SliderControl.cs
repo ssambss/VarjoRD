@@ -7,6 +7,7 @@ public class SliderControl : MonoBehaviour
 {
     [SerializeField] private InteractionSlider slider2D;
     [SerializeField] private InteractionSlider horizontalSlider;
+    public float slider;
 
     public void Horizontal2DSlide()
     {
@@ -27,6 +28,6 @@ public class SliderControl : MonoBehaviour
 
     private void Update()
     {
-        //transform.position = new Vector3(transform.position.x, transform.position.y, slider);
+        transform.position = new Vector3(transform.position.x, transform.position.y, slider);
     }
 }

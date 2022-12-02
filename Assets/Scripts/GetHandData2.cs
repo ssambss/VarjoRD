@@ -16,6 +16,7 @@ public class GetHandData2 : MonoBehaviour
     private int logNumber;
     public static bool trackingActive = false;
     public static Vector3 fingerPos;
+    public GameObject testobj;
 
     void Start()
     {
@@ -34,7 +35,7 @@ public class GetHandData2 : MonoBehaviour
         }
         //Debug.Log(fingerPos);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        /*if (Input.GetKeyDown(KeyCode.Space))
         {
 
             logNumber++;
@@ -45,11 +46,12 @@ public class GetHandData2 : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {
             trackingActive = false;
-        }
+        }*/
 
         if (trackingActive && (Time.time - lastCheck) >= trackingFrequency)
         {
             GetPosition();
+            //GetPos();
             lastCheck = Time.time;
         }
     }
@@ -95,6 +97,19 @@ public class GetHandData2 : MonoBehaviour
      
         Debug.Log("X= " + fingerPos.x + "Y= " + fingerPos.y + "Z= " + fingerPos.z);
         string posData = fingerPos.x.ToString() + "," + fingerPos.y.ToString() + "," + fingerPos.z.ToString() + "\n";
+        File.AppendAllText(path, posData);
+    }
+
+    void GetPos()
+    {
+        string path = Application.dataPath + "/" + figure + "_log" + logNumber + ".csv";
+        if (!File.Exists(path))
+        {
+            File.WriteAllText(path, "");
+        }
+
+        Debug.Log("X= " + testobj.transform.position.x + "Y= " + testobj.transform.position.y + "Z= " + testobj.transform.position.z);
+        string posData = testobj.transform.position.x.ToString() + "," + testobj.transform.position.y.ToString() + "," + testobj.transform.position.z.ToString() + "\n";
         File.AppendAllText(path, posData);
     }
 

@@ -22,10 +22,11 @@ public class DrawFigures : MonoBehaviour
     public static Vector3[] trianglePointsInLine;
     public static Vector3[] squarePointsInLine;
     public static Vector3[] circlePointsInLine;
-    //public Vector3 positionToMoveTo;
-    //public Vector3 originalPos;
+    public Vector3 positionToMoveTo;
+    public Vector3 originalPos;
+    [SerializeField] GameObject obj;
 
-    //private int index = 0;
+    private int index = 0;
 
     //private float n = 5;
     public LineRenderer lr;
@@ -36,8 +37,9 @@ public class DrawFigures : MonoBehaviour
 
     void Start()
     {
-        //originalPos = transform.position;
-        //positionToMoveTo = triangle[index].transform.position;
+
+        originalPos = circleGuides[index].transform.position;
+        positionToMoveTo = circleGuides[index].transform.position;
     }
 
     private void Update()
@@ -46,13 +48,13 @@ public class DrawFigures : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1)) DrawSquare();
 
-        if (Input.GetMouseButtonDown(2)) DrawCircle(steps, radius);
+        if (Input.GetMouseButtonDown(2)) DrawCircle2();
 
             
 
         /*if (Input.GetMouseButtonDown(0))
         {
-            StartCoroutine(LerpPosition(points.Count + 1, positionToMoveTo, 1));
+            StartCoroutine(LerpPosition(circleGuides.Count + 1, positionToMoveTo, 1, obj));
         }*/
 
 
@@ -61,6 +63,11 @@ public class DrawFigures : MonoBehaviour
     public void SetUpLine(Transform[] points)
     {
         lr.positionCount = points.Length;
+    }
+    
+    public void SetUpCircle(List<GameObject> points)
+    {
+        lr.positionCount = points.Count;
     }
 
 
@@ -131,6 +138,24 @@ public class DrawFigures : MonoBehaviour
             //if (i % n == 0) InstantiateCircleGuides(currentPos);
         }
 
+        //circlePointsInLine = new Vector3[lr.positionCount];
+
+        //lr.GetPositions(circlePointsInLine);
+    }
+
+    public void DrawCircle2()
+    {
+        hd.ClearDrawing();
+        DeactivateGuides();
+        currentFigure = Figure.Circle;
+        if (circleGuides != null) ActivateGuides();
+        SetUpCircle(circleGuides);
+
+        for (int i = 0; i < lr.positionCount; i++)
+        {
+            lr.SetPosition(i, circleGuides[i].transform.position);
+        }
+
         circlePointsInLine = new Vector3[lr.positionCount];
 
         lr.GetPositions(circlePointsInLine);
@@ -182,28 +207,28 @@ public class DrawFigures : MonoBehaviour
         }
     }
 
-    /*
-    IEnumerator LerpPosition(int n, Vector3 targetPosition, float duration)
+    //Can be used to draw benchmark figures
+    IEnumerator LerpPosition(int n, Vector3 targetPosition, float duration, GameObject obj)
     {
         if (n == 0) yield break;
         float time = 0;
-        Vector3 startPosition = transform.position;
+        Vector3 startPosition = obj.transform.position;
         while (time <= duration)
         {
-            transform.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            obj.transform.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
             time += Time.deltaTime;
             yield return null;
         }
-        transform.position = targetPosition;
+        obj.transform.position = targetPosition;
         index += 1; 
-        if (index < points.Count)
+        if (index < circleGuides.Count)
         {
-            positionToMoveTo = points[index].transform.position;           
+            positionToMoveTo = circleGuides[index].transform.position;           
         }
         else
         {
             positionToMoveTo = originalPos;
         }
-        StartCoroutine(LerpPosition(n - 1, positionToMoveTo, duration));
-    }*/
+        StartCoroutine(LerpPosition(n - 1, positionToMoveTo, duration, obj));
+    }
 }

@@ -13,9 +13,14 @@ public class Activate : MonoBehaviour
     {
         if (other.gameObject.tag == "Player" && timer > 2)
         {
-            GetHandData2.trackingActive = !GetHandData2.trackingActive; Debug.Log(other.gameObject.name);
-            if (GetHandData2.trackingActive) AssignNewGradient(lr, gr);
-            if (!GetHandData2.trackingActive) AssignOriginalGradient(lr, originalgr);
+            GetHandData2.trackingActive = !GetHandData2.trackingActive;
+            if (GetHandData2.trackingActive)
+            {
+                AssignNewGradient(lr, gr);
+                GetHandData2.logNumber++; 
+                Debug.Log(GetHandData2.logNumber);
+            } 
+            if (!GetHandData2.trackingActive) AssignOriginalGradient(lr, originalgr); 
             timer = 0;
 
         }      

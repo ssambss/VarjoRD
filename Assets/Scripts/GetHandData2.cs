@@ -14,7 +14,7 @@ public class GetHandData2 : MonoBehaviour
     private float lastCheck = 0.0F;
     public string figure;
     public string folderName;
-    private int logNumber;
+    public static int logNumber;
     public static bool trackingActive = false;
     public static Vector3 fingerPos;
     public GameObject testobj;

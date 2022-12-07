@@ -13,10 +13,13 @@ public class GetBodyData : MonoBehaviour
     private int logNumber;
     public bool trackingActive = false;
 
+    public string folderName;
+
     // Start is called before the first frame update
     void Start()
     {
         logNumber = 0;
+        folderName = "Inside_out";
     }
 
     // Update is called once per frame
@@ -38,14 +41,34 @@ public class GetBodyData : MonoBehaviour
             GetPosition();
             lastCheck = Time.time;
         }
+
+        if (Input.GetKey(KeyCode.F1))
+        {
+            folderName = "1_Beacon";
+        }
+
+        if (Input.GetKey(KeyCode.F2))
+        {
+            folderName = "2_Beacon";
+        }
+
+        if (Input.GetKey(KeyCode.F3))
+        {
+            folderName = "3_Beacon";
+        }
+
+        if (Input.GetKey(KeyCode.F4))
+        {
+            folderName = "Inside_out";
+        }
     }
 
     void GetPosition()
     {
-        string path = Application.dataPath + "/" + "body" + "_log" + logNumber + ".csv";
+        string path = Application.dataPath + "/" + "Data" + "/" + folderName + "/" + folderName + "_log" + logNumber + ".csv";
         if (!File.Exists(path))
         {
-            File.WriteAllText(path, "");
+            File.WriteAllText(path, "X" + "," + "Y" + "," + "Z" + "\n");
         }
 
         Debug.Log("X= " + userPos.position.x + "Y= " + userPos.position.y + "Z= " + userPos.position.z);

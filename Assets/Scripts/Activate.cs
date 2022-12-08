@@ -13,7 +13,9 @@ public class Activate : MonoBehaviour
     {
         if (other.gameObject.tag == "Player" && timer > 2)
         {
+            GetHandData2.drawType = "hand";
             GetHandData2.trackingActive = !GetHandData2.trackingActive;
+            
             if (GetHandData2.trackingActive)
             {
                 AssignNewGradient(lr, gr);
@@ -22,8 +24,22 @@ public class Activate : MonoBehaviour
             } 
             if (!GetHandData2.trackingActive) AssignOriginalGradient(lr, originalgr); 
             timer = 0;
+        }   
 
-        }      
+        if (other.gameObject.tag == "Marker" && timer > 2)
+        {
+            GetHandData2.drawType = "marker";
+            GetHandData2.trackingActive = !GetHandData2.trackingActive;
+        
+            if (GetHandData2.trackingActive)
+            {
+                AssignNewGradient(lr, gr);
+                GetHandData2.logNumber++; 
+                Debug.Log(GetHandData2.logNumber);
+            } 
+            if (!GetHandData2.trackingActive) AssignOriginalGradient(lr, originalgr); 
+            timer = 0;
+        }     
     }
 
     private void Update()

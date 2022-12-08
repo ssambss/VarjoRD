@@ -26,4 +26,11 @@ public class MarkerDraw : MonoBehaviour
         lr.SetPosition(index, points[index]);
         index++;
     }
+
+    public void ClearDrawing()
+    {
+        points.Clear(); 
+        index = 0;
+        lr.positionCount = points.Count;
+    }
 }

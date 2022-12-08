@@ -16,6 +16,7 @@ public class DrawFigures : MonoBehaviour
     [SerializeField] private Transform[] square;
     [SerializeField] private CalculateAreas calc;
     [SerializeField] private HandDraw hd;
+    [SerializeField] private MarkerDraw md;
     [SerializeField] private int steps;
     [SerializeField] private float radius;
     [SerializeField] private Vector3 offset;
@@ -74,6 +75,7 @@ public class DrawFigures : MonoBehaviour
     public void DrawTriangle()
     {
         hd.ClearDrawing();
+        md.ClearDrawing();
         DeactivateGuides();
         currentFigure = Figure.Triangle;
         ActivateGuides();
@@ -93,6 +95,7 @@ public class DrawFigures : MonoBehaviour
     public void DrawSquare()
     {
         hd.ClearDrawing();
+        md.ClearDrawing();
         DeactivateGuides();
         currentFigure = Figure.Square;
         ActivateGuides();
@@ -112,6 +115,7 @@ public class DrawFigures : MonoBehaviour
     public void DrawCircle(int steps, float radius)
     {
         hd.ClearDrawing();
+        md.ClearDrawing();
         DeactivateGuides();
         currentFigure = Figure.Circle;
         if (circleGuides != null)ActivateGuides();
@@ -146,6 +150,7 @@ public class DrawFigures : MonoBehaviour
     public void DrawCircle2()
     {
         hd.ClearDrawing();
+        md.ClearDrawing();
         DeactivateGuides();
         currentFigure = Figure.Circle;
         if (circleGuides != null) ActivateGuides();

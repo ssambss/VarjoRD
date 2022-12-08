@@ -14,14 +14,16 @@ public class GetHandData2 : MonoBehaviour
     private float lastCheck = 0.0F;
     public string figure;
     public string folderName;
+    public static string drawType;
     public static int logNumber;
     public static bool trackingActive = false;
     public static Vector3 fingerPos;
     public GameObject testobj;
 
+
     void Start()
     {
-        logNumber = 0;
+        logNumber = 24;
     }
 
 
@@ -52,7 +54,16 @@ public class GetHandData2 : MonoBehaviour
 
         if (trackingActive && (Time.time - lastCheck) >= trackingFrequency)
         {
-            GetPosition();
+            switch (drawType)
+            {
+                case "hand":
+                    GetPosition();
+                    break;
+                
+                case "marker":
+                    GetPositionMarker();
+                    break;
+            }
             //GetPos();
             lastCheck = Time.time;
         }
@@ -102,12 +113,12 @@ public class GetHandData2 : MonoBehaviour
         File.AppendAllText(path, posData);
     }
 
-    void GetPos()
+    void GetPositionMarker()
     {
-        string path = Application.dataPath + "/" + figure + "_log" + logNumber + ".csv";
+        string path = Application.dataPath + "/" + "DataMarker" + "/" + folderName + "/" + figure + "_log" + logNumber + ".csv";
         if (!File.Exists(path))
         {
-            File.WriteAllText(path, "");
+            File.WriteAllText(path, "X" + "," + "Y" + "," + "Z" + "\n");
         }
 
         Debug.Log("X= " + testobj.transform.position.x + "Y= " + testobj.transform.position.y + "Z= " + testobj.transform.position.z);

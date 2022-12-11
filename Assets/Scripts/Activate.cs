@@ -56,9 +56,4 @@ public class Activate : MonoBehaviour
     {
         lr.colorGradient = originalgr;
     }
-
-    IEnumerator Wait()
-    {
-       yield return new WaitForSeconds(1);
-    }
 }

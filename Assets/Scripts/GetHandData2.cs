@@ -23,7 +23,7 @@ public class GetHandData2 : MonoBehaviour
 
     void Start()
     {
-        logNumber = 24;
+        logNumber = 100;
     }
 
 
@@ -103,6 +103,7 @@ public class GetHandData2 : MonoBehaviour
     void GetPosition()
     {
         string path = Application.dataPath + "/" + "Data" + "/" + folderName + "/" + figure + "_log" + logNumber + ".csv";
+
         if (!File.Exists(path))
         {
             File.WriteAllText(path, "X" + "," + "Y" + "," + "Z" + "\n");
@@ -116,6 +117,7 @@ public class GetHandData2 : MonoBehaviour
     void GetPositionMarker()
     {
         string path = Application.dataPath + "/" + "DataMarker" + "/" + folderName + "/" + figure + "_log" + logNumber + ".csv";
+
         if (!File.Exists(path))
         {
             File.WriteAllText(path, "X" + "," + "Y" + "," + "Z" + "\n");
